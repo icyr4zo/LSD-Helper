@@ -1,123 +1,149 @@
-# 🌙 LSD Helper – Lịch sử Đảng Cộng sản Việt Nam
+# 🌙 LSD Helper — Ứng dụng ôn tập Lịch sử Đảng Cộng sản Việt Nam
 
-**LSD Helper** là ứng dụng web hỗ trợ ôn tập trắc nghiệm môn *Lịch sử Đảng Cộng sản Việt Nam*. Ứng dụng được thiết kế với giao diện Night Mode hiện đại, thân thiện và dễ sử dụng, giúp người học củng cố kiến thức, kiểm tra mức độ ghi nhớ và chuẩn bị tốt hơn cho các kỳ thi.
+**LSD Helper** là ứng dụng hỗ trợ học tập và ôn luyện trắc nghiệm môn *Lịch sử Đảng Cộng sản Việt Nam*, giúp sinh viên hệ thống hóa kiến thức, ghi nhớ các sự kiện lịch sử quan trọng và tự kiểm tra mức độ hiểu bài.
 
-Ứng dụng cung cấp các chế độ luyện tập theo từng chương và chế độ trộn câu hỏi từ toàn bộ nội dung học tập, đi kèm phần giải thích đáp án nhằm giúp người học hiểu rõ kiến thức thay vì chỉ ghi nhớ đáp án.
+Không cần đăng ký tài khoản hay cài đặt phần mềm, bạn có thể truy cập ứng dụng ngay trên trình duyệt và bắt đầu ôn tập.
+
+<p align="center">
+  <a href="https://icyr4zo.github.io/LSD-Helper/">
+    <img src="https://img.shields.io/badge/🚀_TRẢI_NGHIỆM_NGAY-LSD_Helper-238636?style=for-the-badge" alt="Try LSD Helper" />
+  </a>
+</p>
+
+---
 
 ## ✨ Tính năng nổi bật
 
-### 📚 1. Bốn chế độ luyện tập
+### 📚 Ôn tập theo từng chương
 
-Người dùng có thể lựa chọn một trong bốn chế độ sau:
+Lựa chọn nội dung muốn ôn tập theo chương:
 
 | Chế độ | Nội dung |
 |---|---|
-| **Chương 1 (1930 – 1945)** | Đảng Cộng sản Việt Nam ra đời và lãnh đạo đấu tranh giành chính quyền. |
-| **Chương 2 (1945 – 1975)** | Đảng lãnh đạo cuộc kháng chiến chống thực dân Pháp và đế quốc Mỹ. |
-| **Chương 3 (1975 – nay)** | Đảng lãnh đạo cả nước quá độ lên chủ nghĩa xã hội và thực hiện công cuộc Đổi mới. |
-| **Mix Mode** | Trộn ngẫu nhiên câu hỏi từ cả ba chương để ôn tập tổng hợp. |
+| **Chương 1 (1930–1945)** | Đảng ra đời và lãnh đạo đấu tranh giành chính quyền |
+| **Chương 2 (1945–1975)** | Kháng chiến chống thực dân Pháp và đế quốc Mỹ |
+| **Chương 3 (1975–nay)** | Cả nước quá độ lên CNXH và công cuộc Đổi mới |
+| **Mix Mode** | Ôn tập tổng hợp câu hỏi từ cả ba chương |
 
-### 🎯 2. Tùy chỉnh số lượng câu hỏi
+### 🎯 Tùy chỉnh số lượng câu hỏi
 
-Đối với chế độ Mix Mode, người dùng có thể lựa chọn số lượng câu hỏi cho mỗi lượt luyện tập:
+Chủ động lựa chọn số câu trong mỗi lượt ôn tập:
 
-- 20 câu.
-- 40 câu.
-- 60 câu.
-- Toàn bộ ngân hàng câu hỏi.
+- 20 câu — Ôn tập nhanh.
+- 40 câu — Luyện tập thông thường.
+- 60 câu — Ôn tập chuyên sâu.
+- Tất cả câu hỏi — Luyện tập toàn bộ ngân hàng câu hỏi.
 
-Các câu hỏi được lựa chọn ngẫu nhiên, giúp đa dạng hóa nội dung trong mỗi lần ôn tập.
+### 💡 Giải thích đáp án sau mỗi câu
 
-### 💡 3. Giải thích đáp án
+Sau khi lựa chọn đáp án, ứng dụng sẽ:
 
-Sau khi trả lời câu hỏi, người dùng có thể xem đáp án chính xác và phần giải thích đi kèm.
+- Thông báo câu trả lời đúng hoặc sai.
+- Hiển thị đáp án chính xác.
+- Cung cấp phần giải thích kiến thức liên quan.
 
-Nội dung giải thích được xây dựng dựa trên kiến thức môn học, giúp người học hiểu rõ bản chất vấn đề và ghi nhớ các mốc thời gian, sự kiện lịch sử quan trọng.
+Giúp bạn không chỉ biết đáp án mà còn hiểu nội dung cần ghi nhớ.
 
-### 🔄 4. Tự động lưu câu trả lời sai
+### 🔄 Ôn tập lại câu trả lời sai
 
-- Tự động ghi nhận những câu hỏi người dùng trả lời sai.
-- Lưu dữ liệu bằng `localStorage` ngay trên trình duyệt.
-- Hỗ trợ ôn tập lại các câu hỏi đã làm sai.
-- Dữ liệu vẫn được giữ lại khi tải lại trang trên cùng trình duyệt, trừ khi bộ nhớ trình duyệt bị xóa.
+Không cần ghi chép thủ công những câu đã làm sai:
 
-### 🌙 5. Giao diện Night Mode
+- Tự động lưu câu hỏi trả lời sai.
+- Có thể xem lại danh sách câu hỏi sai.
+- Luyện tập lại để củng cố kiến thức.
+- Tự động loại khỏi danh sách ôn sai khi trả lời đúng.
 
-- Giao diện tối mặc định, phù hợp với việc học tập vào buổi tối.
-- Thiết kế trực quan, dễ quan sát.
+*Lưu ý: Dữ liệu câu sai được lưu trên trình duyệt bằng LocalStorage. Dữ liệu không tự đồng bộ giữa các thiết bị hoặc trình duyệt khác nhau.*
+
+### 🔀 Trộn câu hỏi ngẫu nhiên
+
+Bật hoặc tắt chế độ trộn câu hỏi để thay đổi thứ tự câu hỏi giữa các lượt luyện tập, giúp hạn chế việc ghi nhớ theo thứ tự cố định.
+
+### 🔎 Tìm kiếm câu hỏi
+
+Nhập từ khóa để nhanh chóng tìm những câu hỏi có nội dung liên quan, thuận tiện khi muốn ôn tập một chủ đề cụ thể.
+
+### 🌙 Giao diện Night Mode
+
+- Giao diện tối hiện đại, dễ quan sát.
 - Bố cục rõ ràng, thao tác đơn giản.
-- Tối ưu trải nghiệm trên các kích thước màn hình khác nhau.
+- Hiển thị tiến độ, số câu đúng, số câu sai và tỷ lệ chính xác.
+- Tương thích với nhiều kích thước màn hình.
 
-### 📂 6. Hỗ trợ mở rộng ngân hàng câu hỏi
+---
 
-Ứng dụng hỗ trợ nạp dữ liệu câu hỏi từ file `questions.json` đặt cùng thư mục với `index.html`.
+## 🚀 Bắt đầu sử dụng
 
-Người phát triển có thể bổ sung hoặc cập nhật ngân hàng câu hỏi thông qua file dữ liệu mà không cần chỉnh sửa trực tiếp nội dung giao diện.
+### 1. Truy cập ứng dụng
 
-## 🚀 Hướng dẫn sử dụng
+Mở đường dẫn:
 
-### Cách 1: Chạy trực tiếp trên máy tính
+**👉 https://icyr4zo.github.io/LSD-Helper/**
 
-1. Tải mã nguồn của dự án về máy bằng cách chọn **Code → Download ZIP** trên GitHub.
-2. Giải nén thư mục dự án.
-3. Mở file `index.html` bằng trình duyệt web.
-4. Chọn chương học hoặc Mix Mode để bắt đầu ôn tập.
+### 2. Chọn chương muốn ôn tập
 
-*Lưu ý: Nếu ứng dụng sử dụng chức năng tải dữ liệu bằng `fetch()` từ file `questions.json`, hãy chạy dự án thông qua một local server thay vì mở trực tiếp file HTML.*
+Chọn một trong ba chương hoặc Mix Mode nếu muốn luyện tập tổng hợp.
 
-### Cách 2: Truy cập trực tuyến bằng GitHub Pages
+### 3. Thiết lập lượt ôn tập
 
-Nếu dự án đã được triển khai trên GitHub Pages:
+- Chọn số lượng câu hỏi.
+- Bật hoặc tắt chế độ trộn câu.
+- Sử dụng ô tìm kiếm nếu muốn tìm câu hỏi theo từ khóa.
 
-1. Truy cập đường dẫn website được cung cấp trong repository.
-2. Lựa chọn chế độ luyện tập mong muốn.
-3. Tiến hành trả lời câu hỏi và xem giải thích đáp án.
-4. Sử dụng chức năng ôn lại câu sai để củng cố kiến thức.
+### 4. Bắt đầu làm bài
+
+Đọc câu hỏi, chọn một trong bốn đáp án A, B, C, D. Sau khi trả lời, bạn sẽ thấy kết quả và phần giải thích.
+
+### 5. Ôn lại câu sai
+
+Nhấn **Ôn câu làm sai** để luyện tập lại những câu bạn chưa trả lời chính xác.
+
+---
+
+## 🖥️ Giao diện ứng dụng
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/icyr4zo/LSD-Helper/main/assets/preview.png" alt="LSD Helper Preview" width="90%" />
+</p>
+
+---
 
 ## 🛠️ Công nghệ sử dụng
 
-- **HTML5:** Xây dựng cấu trúc trang web.
-- **CSS3:** Thiết kế giao diện và hiệu ứng Night Mode.
-- **JavaScript:** Xử lý logic luyện tập, chấm điểm, trộn câu hỏi và tương tác người dùng.
-- **JSON:** Lưu trữ và quản lý ngân hàng câu hỏi.
-- **LocalStorage:** Lưu trữ các câu hỏi trả lời sai trên trình duyệt.
-- **GitHub Pages:** Triển khai ứng dụng trực tuyến.
+| Công nghệ | Vai trò |
+|---|---|
+| HTML5 | Xây dựng cấu trúc giao diện |
+| CSS3 | Thiết kế giao diện Night Mode |
+| JavaScript | Xử lý câu hỏi, đáp án và chức năng luyện tập |
+| JSON | Lưu trữ ngân hàng câu hỏi |
+| LocalStorage | Lưu các câu hỏi trả lời sai trên trình duyệt |
+| GitHub Pages | Triển khai ứng dụng trực tuyến |
 
-## 📦 Cấu trúc dự án
+---
 
-```text
-LSD-Helper/
-│
-├── index.html          # Giao diện và chức năng ứng dụng
-├── questions.json      # Ngân hàng câu hỏi (nếu tách riêng)
-└── README.md           # Tài liệu giới thiệu dự án
-```
+## 📌 Một số lưu ý
 
-## 🌐 Triển khai trên GitHub Pages
+- Ứng dụng miễn phí và không yêu cầu đăng nhập.
+- Nên sử dụng trình duyệt hiện đại như Chrome, Edge hoặc Firefox.
+- Khi sử dụng bản trực tuyến, cần có kết nối Internet để tải ứng dụng và ngân hàng câu hỏi.
+- Dữ liệu câu hỏi được tải từ file `questions.json`.
+- Các câu hỏi đã làm sai được lưu trên trình duyệt hiện tại; xóa dữ liệu trình duyệt có thể làm mất danh sách này.
+- Nội dung giải thích có mục đích hỗ trợ ôn tập, bạn nên kết hợp với giáo trình và tài liệu học tập chính thức.
 
-Bạn có thể triển khai ứng dụng miễn phí bằng GitHub Pages:
+---
 
-1. Tạo một repository mới trên GitHub.
-2. Upload các file cần thiết của dự án (`index.html`, `README.md` và `questions.json` nếu có).
-3. Truy cập **Settings → Pages**.
-4. Tại mục **Build and deployment**, chọn:
-   - Source: `Deploy from a branch`.
-   - Branch: `main`.
-   - Folder: `/ (root)`.
-5. Nhấn **Save** và chờ GitHub hoàn tất quá trình triển khai.
-6. Truy cập đường dẫn website được GitHub Pages cung cấp.
+## 👨‍💻 Developer
 
-## 📝 Lưu ý
+**icyr4zo**
 
-- Ứng dụng hoạt động trực tiếp trên trình duyệt, không yêu cầu cài đặt cơ sở dữ liệu hay backend.
-- Các câu hỏi và dữ liệu học tập được lưu trữ theo cấu hình của ứng dụng.
-- Dữ liệu câu trả lời sai sử dụng LocalStorage nên chỉ tồn tại trên trình duyệt và thiết bị tương ứng.
-- Để đảm bảo ứng dụng hoạt động chính xác, hãy giữ nguyên cấu trúc file và định dạng dữ liệu JSON theo yêu cầu của mã nguồn.
+- GitHub: [https://github.com/icyr4zo](https://github.com/icyr4zo)
+- Repository: [LSD-Helper](https://github.com/icyr4zo/LSD-Helper)
+
+Nếu thấy ứng dụng hữu ích, đừng quên để lại một ⭐ cho repository nhé!
 
 ---
 
 <p align="center">
   <b>🌙 LSD Helper</b><br>
-  <i>Học tập hiệu quả – Ghi nhớ kiến thức – Tự tin trước kỳ thi.</i><br><br>
-  Made with ❤️ by <b>icyr4zo</b>
+  <i>Ôn tập dễ dàng hơn — Ghi nhớ hiệu quả hơn — Tự tin trước kỳ thi.</i>
 </p>
