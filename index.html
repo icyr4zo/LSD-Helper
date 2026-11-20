@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LSD Helper — Ôn tập Lịch sử Đảng CSVN</title>
+  <style>
+    :root {
+      --bg-primary: #0d1117;
+      --bg-secondary: #161b22;
+      --bg-tertiary: #21262d;
+      --border: #30363d;
+      --text-primary: #f0f6fc;
+      --text-secondary: #8b949e;
+      --accent: #58a6ff;
+      --accent-hover: #79c0ff;
+      --success: #2ea043;
+      --success-bg: rgba(46, 160, 67, 0.16);
+      --danger: #f85149;
+      --danger-bg: rgba(248, 81, 73, 0.16);
+      --warning: #d29922;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .brand-logo {
+      background: linear-gradient(135deg, #da3633, #f85149);
+      color: #fff;
+      font-weight: 800;
+      padding: 0.35rem 0.65rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      letter-spacing: 0.5px;
+    }
+    .brand h1 { font-size: 1.25rem; font-weight: 700; }
+    .credit-badge {
+      font-size: 0.85rem;
+      color: var(--accent);
+      background: rgba(88, 166, 255, 0.12);
+      border: 1px solid rgba(88, 166, 255, 0.3);
+      padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+
+    main {
+      max-width: 1100px;
+      width: 100%;
+      margin: 1.5rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+    }
+
+    .grid-modes {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .mode-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      cursor: pointer;
+      transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+    }
+    .mode-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      background: #1c2128;
+    }
+    .mode-card.active {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent);
+    }
+    .mode-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
+    }
+    .mode-card h3 { font-size: 1.05rem; margin-bottom: 0.35rem; }
+    .mode-card p { font-size: 0.86rem; color: var(--text-secondary); }
+
+    .controls-bar {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+    .control-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      align-items: center;
+    }
+    select, input[type="text"], button {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.5rem 0.85rem;
+      font-size: 0.9rem;
+      outline: none;
+    }
+    select:focus, input[type="text"]:focus { border-color: var(--accent); }
+    button {
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+    button:hover { border-color: var(--accent); }
+    button.primary {
+      background: #1f6feb;
+      border-color: #388bfd;
+      color: #fff;
+    }
+    button.primary:hover { background: #388bfd; }
+
+    .stats-strip {
+      display: flex;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+    .stats-strip strong { color: var(--text-primary); }
+
+    .quiz-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .q-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+    .q-badge {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+    .q-text {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 1.15rem;
+    }
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .option-btn {
+      text-align: left;
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border-radius: 10px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      font-weight: 400;
+    }
+    .option-btn:hover:not(:disabled) {
+      border-color: var(--accent);
+      background: #282e36;
+    }
+    .option-btn.correct {
+      border-color: var(--success);
+      background: var(--success-bg);
+    }
+    .option-btn.wrong {
+      border-color: var(--danger);
+      background: var(--danger-bg);
+    }
+    .opt-key {
+      font-weight: 700;
+      color: var(--accent);
+      min-width: 1.25rem;
+    }
+
+    .explanation-box {
+      margin-top: 1rem;
+      padding: 0.9rem 1rem;
+      border-radius: 10px;
+      background: rgba(88, 166, 255, 0.08);
+      border-left: 3px solid var(--accent);
+      font-size: 0.92rem;
+      color: #c9d1d9;
+      display: none;
+    }
+    .explanation-box.show { display: block; }
+
+    .nav-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1.25rem;
+      gap: 0.75rem;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      background: var(--bg-secondary);
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      margin-top: 2rem;
+    }
+    footer a { color: var(--accent); text-decoration: none; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <span class="brand-logo">LSD</span>
+        <div>
+          <h1>LSD Helper</h1>
+          <div style="font-size:0.8rem;color:var(--text-secondary)">Ngân hàng trắc nghiệm &amp; Bài giảng Lịch sử Đảng CSVN (PTIT)</div>
+        </div>
+      </div>
+      <div class="credit-badge">Made by icyr4zo</div>
+    </div>
+  </header>
+
+  <main>
+    <section class="grid-modes" id="modeSelector">
+      <div class="mode-card active" data-mode="1" onclick="selectMode('1')">
+        <div class="mode-tag">Chương 1 (1930 – 1945)</div>
+        <h3>Đảng ra đời &amp; Giành chính quyền</h3>
+        <p>Bối cảnh lịch sử, Cương lĩnh 2/1930, Luận cương 10/1930, Cao trào 1930–1945 &amp; CMT8.</p>
+      </div>
+      <div class="mode-card" data-mode="2" onclick="selectMode('2')">
+        <div class="mode-tag">Chương 2 (1945 – 1975)</div>
+        <h3>Hai cuộc kháng chiến (1945 – 1975)</h3>
+        <p>Xây dựng chính quyền, kháng chiến chống Pháp (1945–1954) &amp; chống Mỹ cứu nước (1954–1975).</p>
+      </div>
+      <div class="mode-card" data-mode="3" onclick="selectMode('3')">
+        <div class="mode-tag">Chương 3 (1975 – nay)</div>
+        <h3>Quá độ lên CNXH &amp; Đổi mới</h3>
+        <p>Thống nhất đất nước, Đại hội VI (1986), Cương lĩnh 1991/2011 &amp; hội nhập quốc tế.</p>
+      </div>
+      <div class="mode-card" data-mode="mix" onclick="selectMode('mix')">
+        <div class="mode-tag">Tổng hợp 3 Chương</div>
+        <h3>Ôn tập hỗn hợp (Mix Mode)</h3>
+        <p>Trộn ngẫu nhiên câu hỏi từ cả 3 chương để mô phỏng đề thi kết thúc học phần.</p>
+      </div>
+    </section>
+
+    <section class="controls-bar">
+      <div class="control-group">
+        <label for="limitSelect" style="font-size:0.88rem;color:var(--text-secondary)">Số câu:</label>
+        <select id="limitSelect" onchange="resetSession()">
+          <option value="all">Tất cả câu trong bộ</option>
+          <option value="20">20 câu ngẫu nhiên</option>
+          <option value="40" selected>40 câu thi thử</option>
+          <option value="60">60 câu ôn tổng hợp</option>
+        </select>
+
+        <button onclick="toggleShuffle()" id="shuffleBtn">Trộn câu: BẬT</button>
+        <button onclick="startWrongReview()" id="wrongReviewBtn">Ôn câu làm sai (0)</button>
+      </div>
+      <div class="control-group">
+        <input type="text" id="searchInput" placeholder="Tìm nhanh từ khóa..." oninput="filterByKeyword()" />
+        <button class="primary" onclick="resetSession()">Làm mới lượt ôn</button>
+      </div>
+    </section>
+
+    <div class="stats-strip">
+      <span>Chế độ: <strong id="statMode">Chương 1</strong></span>
+      <span>Tiến độ: <strong id="statProgress">0 / 0</strong></span>
+      <span>Đúng: <strong id="statCorrect" style="color:#3fb950">0</strong></span>
+      <span>Sai: <strong id="statWrong" style="color:#f85149">0</strong></span>
+      <span>Tỷ lệ: <strong id="statRate">0%</strong></span>
+    </div>
+
+    <section id="quizContainer"></section>
+  </main>
+
+  <footer>
+    <strong>LSD Helper</strong> • Night Mode Study &amp; Exam Prep Tool • <strong>Made by icyr4zo</strong>
+  </footer>
+
+  <script>
+    // Ngân hàng câu hỏi chuẩn hóa từ 3 file Chương 1, 2, 3 & đối chiếu Tập bài giảng LSD PTIT
+    // Bạn có thể mở rộng mảng QUESTIONS_DATA bên dưới với toàn bộ 698 câu hỏi hoặc nạp qua questions.json
+    const QUESTIONS_DATA = [
+      // --- CHƯƠNG 1 ---
+      {
+        chapter: 1,
+        question: "Cuối thế kỷ XIX đầu thế kỷ XX nguy cơ nào do các nước đế quốc gây ra chi phối trực tiếp đến lịch sử của nhiều nước Châu Á, Châu Phi, trong đó có Việt Nam?",
+        options: {
+          A: "Sự phát triển vượt bậc của nền kinh tế",
+          B: "Sự hình thành các tổ chức độc quyền",
+          C: "Tăng cường xâm lược thuộc địa",
+          D: "Chuẩn bị chiến tranh để chia lại thị trường thế giới"
+        },
+        answer: "C",
+        explain: "Bài giảng LSD PTIT (Chương 1): Chủ nghĩa tư bản chuyển sang giai đoạn đế quốc chủ nghĩa đã đẩy mạnh xâm lược thuộc địa ở châu Á, châu Phi và Mỹ Latinh."
+      },
+      {
+        chapter: 1,
+        question: "Thời gian thực dân Pháp tiến hành khai thác thuộc địa lần thứ nhất ở Việt Nam khi nào?",
+        options: {
+          A: "1858 - 1884",
+          B: "1884 - 1896",
+          C: "1896 - 1913",
+          D: "1914 - 1918"
+        },
+        answer: "C",
+        explain: "Cuộc khai thác thuộc địa lần thứ nhất của thực dân Pháp diễn ra từ năm 1897 (bắt đầu chính sách của Toàn quyền Paul Doumer 1896-1897) đến năm 1913."
+      },
+      {
+        chapter: 1,
+        question: "Trong đợt khai thác thuộc địa lần thứ nhất của thực dân Pháp ở nước ta có giai cấp mới nào được hình thành?",
+        options: {
+          A: "Giai cấp tư sản",
+          B: "Giai cấp tư sản và công nhân",
+          C: "Giai cấp công nhân",
+          D: "Giai cấp tiểu tư sản"
+        },
+        answer: "C",
+        explain: "Giai cấp công nhân Việt Nam ra đời trong cuộc khai thác thuộc địa lần thứ nhất, trước cả giai cấp tư sản dân tộc."
+      },
+      {
+        chapter: 1,
+        question: "Mâu thuẫn cơ bản và chủ yếu ở Việt Nam đầu thế kỷ XX là mâu thuẫn nào?",
+        options: {
+          A: "Mâu thuẫn giữa giai cấp nông dân với giai cấp địa chủ phong kiến",
+          B: "Mâu thuẫn giữa giai cấp công nhân với giai cấp tư sản",
+          C: "Mâu thuẫn giữa công nhân và nông dân với đế quốc và phong kiến",
+          D: "Mâu thuẫn giữa toàn thể dân tộc Việt Nam với đế quốc xâm lược và phong kiến tay sai"
+        },
+        answer: "D",
+        explain: "Mâu thuẫn giữa toàn thể dân tộc Việt Nam với thực dân Pháp xâm lược và tay sai phản động là mâu thuẫn chủ yếu, gay gắt nhất."
+      },
+      {
+        chapter: 1,
+        question: "Nguyễn Ái Quốc đã đọc Sơ thảo lần thứ nhất những luận cương về vấn đề dân tộc và vấn đề thuộc địa của Lênin vào thời gian và ở đâu?",
+        options: {
+          A: "7/1920 - Liên Xô",
+          B: "7/1920 - Pháp",
+          C: "7/1920 - Quảng Châu (Trung Quốc)",
+          D: "8/1920 - Trung Quốc"
+        },
+        answer: "B",
+        explain: "Tháng 7/1920, tại Paris (Pháp), Nguyễn Ái Quốc đọc Sơ thảo luận cương của Lênin đăng trên báo L'Humanité, tìm thấy con đường cứu nước đúng đắn."
+      },
+      {
+        chapter: 1,
+        question: "Văn kiện nào của Đảng đặt nhiệm vụ chống đế quốc lên hàng đầu?",
+        options: {
+          A: "Chính cương vắn tắt, Sách lược vắn tắt do Hội nghị thành lập Đảng thông qua",
+          B: "Luận cương chính trị tháng 10-1930",
+          C: "Thư của Trung ương gửi cho các cấp đảng bộ (12-1930)",
+          D: "Nghị quyết Đại hội lần thứ nhất của Đảng (3-1935)"
+        },
+        answer: "A",
+        explain: "Cương lĩnh chính trị đầu tiên (2/1930) do Nguyễn Ái Quốc soạn thảo xác định nhiệm vụ giải phóng dân tộc, chống đế quốc lên hàng đầu."
+      },
+      {
+        chapter: 1,
+        question: "Hội nghị nào của Ban Chấp hành Trung ương Đảng nhấn mạnh giải phóng dân tộc là nhiệm vụ bức thiết nhất?",
+        options: {
+          A: "Hội nghị họp tháng 10-1930",
+          B: "Hội nghị họp tháng 11-1939",
+          C: "Hội nghị họp tháng 11-1940",
+          D: "Hội nghị họp tháng 5-1941"
+        },
+        answer: "D",
+        explain: "Hội nghị Trung ương 8 (5/1941) tại Pác Bó (Cao Bằng) do Nguyễn Ái Quốc chủ trì hoàn chỉnh chủ trương chuyển hướng chỉ đạo chiến lược, đặt giải phóng dân tộc lên tối cao."
+      },
+
+      // --- CHƯƠNG 2 ---
+      {
+        chapter: 2,
+        question: "Chủ tịch Hồ Chí Minh ra Lời kêu gọi toàn quốc kháng chiến vào thời điểm nào?",
+        options: {
+          A: "Đêm ngày 18-9-1946",
+          B: "Đêm ngày 19-12-1946",
+          C: "Ngày 20-12-1946",
+          D: "Ngày 2-9-1945"
+        },
+        answer: "B",
+        explain: "Đêm ngày 19/12/1946, Chủ tịch Hồ Chí Minh ra Lời kêu gọi toàn quốc kháng chiến; sáng 20/12/1946 lời kêu gọi được phát đi toàn quốc."
+      },
+      {
+        chapter: 2,
+        question: "Quân đội Đồng minh nào dưới danh nghĩa giải giáp quân Nhật kéo vào Việt Nam từ vĩ tuyến 16 trở ra Bắc?",
+        options: {
+          A: "Pháp",
+          B: "Anh",
+          C: "Trung Hoa Dân Quốc",
+          D: "Mĩ"
+        },
+        answer: "C",
+        explain: "Theo thỏa thuận Potsdam, từ vĩ tuyến 16 trở ra Bắc do quân đội Trung Hoa Dân Quốc (Tưởng Giới Thạch) vào giải giáp quân Nhật; từ vĩ tuyến 16 trở vào Nam là quân Anh."
+      },
+      {
+        chapter: 2,
+        question: "Cuộc tổng giao chiến lịch sử mở đầu của kháng chiến chống thực dân Pháp của quân và dân ta ở Hà Nội đã diễn ra trong bao lâu?",
+        options: {
+          A: "60 ngày đêm",
+          B: "30 ngày đêm",
+          C: "12 ngày đêm",
+          D: "90 ngày đêm"
+        },
+        answer: "A",
+        explain: "Quân và dân Hà Nội đã chiến đấu giam chân địch suốt 60 ngày đêm (từ 19/12/1946 đến 17/2/1947), bảo vệ an toàn cơ quan đầu não rút lên chiến khu."
+      },
+      {
+        chapter: 2,
+        question: "Chỉ thị Kháng chiến kiến quốc của Trung ương Đảng ngày 25/11/1945 xác định nhiệm vụ nào là trung tâm, bao trùm nhất?",
+        options: {
+          A: "Củng cố, bảo vệ chính quyền cách mạng",
+          B: "Chống thực dân Pháp xâm lược",
+          C: "Cải thiện đời sống nhân dân",
+          D: "Cả A, B và C"
+        },
+        answer: "A",
+        explain: "Chỉ thị Kháng chiến kiến quốc (25/11/1945) xác định nhiệm vụ chủ yếu, trước mắt là củng cố chính quyền, chống thực dân Pháp xâm lược, bài trừ nội phản, cải thiện đời sống nhân dân."
+      },
+
+      // --- CHƯƠNG 3 ---
+      {
+        chapter: 3,
+        question: "Các thành phần kinh tế dựa trên chế độ công hữu ở Việt Nam là?",
+        options: {
+          A: "Kinh tế tư nhân và kinh tế có vốn đầu tư nước ngoài",
+          B: "Kinh tế nhà nước và kinh tế tư nhân",
+          C: "Kinh tế nhà nước và kinh tế tập thể",
+          D: "Kinh tế tập thể và kinh tế tư nhân"
+        },
+        answer: "C",
+        explain: "Bài giảng LSD PTIT (Chương 3): Kinh tế nhà nước và kinh tế tập thể dựa trên chế độ sở hữu công hữu về tư liệu sản xuất, trong đó kinh tế nhà nước giữ vai trò chủ đạo."
+      },
+      {
+        chapter: 3,
+        question: "Kinh tế thị trường định hướng XHCN ở Việt Nam là nền kinh tế như thế nào?",
+        options: {
+          A: "Có nhiều hình thức sở hữu, nhiều thành phần kinh tế",
+          B: "Có nhiều hình thức sở hữu, một thành phần kinh tế",
+          C: "Có một hình thức sở hữu, nhiều thành phần kinh tế",
+          D: "Có một hình thức sở hữu, một thành phần kinh tế"
+        },
+        answer: "A",
+        explain: "Nền kinh tế thị trường định hướng XHCN vận hành đầy đủ, đồng bộ theo quy luật thị trường, có nhiều hình thức sở hữu, nhiều thành phần kinh tế."
+      },
+      {
+        chapter: 3,
+        question: "Việt Nam gia nhập Hội đồng Tương trợ kinh tế (khối SEV) vào năm nào?",
+        options: {
+          A: "Năm 1975",
+          B: "Năm 1976",
+          C: "Năm 1977",
+          D: "Năm 1978"
+        },
+        answer: "D",
+        explain: "Ngày 29/6/1978, Việt Nam chính thức gia nhập Hội đồng Tương trợ kinh tế (SEV)."
+      },
+      {
+        chapter: 3,
+        question: "Việt Nam tiếp nhận ghế thành viên tại Liên Hợp quốc vào năm nào?",
+        options: {
+          A: "Năm 1975",
+          B: "Năm 1976",
+          C: "Năm 1977",
+          D: "Năm 1978"
+        },
+        answer: "C",
+        explain: "Ngày 20/9/1977, Việt Nam chính thức trở thành thành viên thứ 149 của Liên Hợp Quốc."
+      },
+      {
+        chapter: 3,
+        question: "Đại hội đại biểu toàn quốc lần thứ VI (12/1986) của Đảng đã bầu ai làm Tổng Bí thư?",
+        options: {
+          A: "Nguyễn Văn Linh",
+          B: "Đỗ Mười",
+          C: "Trường Chinh",
+          D: "Lê Duẩn"
+        },
+        answer: "A",
+        explain: "Đại hội VI (12/1986) mở đầu công cuộc Đổi mới toàn diện đất nước và bầu đồng chí Nguyễn Văn Linh làm Tổng Bí thư."
+      }
+    ];
+
+    let currentMode = "1";
+    let shuffleEnabled = true;
+    let activeList = [];
+    let currentIndex = 0;
+    let userAnswers = {};
+    let wrongBank = JSON.parse(localStorage.getItem("lsd_helper_wrong") || "[]");
+
+    function updateWrongCount() {
+      document.getElementById("wrongReviewBtn").textContent = `Ôn câu làm sai (${wrongBank.length})`;
+    }
+
+    function selectMode(mode) {
+      currentMode = mode;
+      document.querySelectorAll(".mode-card").forEach(card => {
+        card.classList.toggle("active", card.dataset.mode === mode);
+      });
+      const labels = {
+        "1": "Chương 1 (1930 – 1945)",
+        "2": "Chương 2 (1945 – 1975)",
+        "3": "Chương 3 (1975 – nay)",
+        "mix": "Hỗn hợp cả 3 chương"
+      };
+      document.getElementById("statMode").textContent = labels[mode] || mode;
+      resetSession();
+    }
+
+    function toggleShuffle() {
+      shuffleEnabled = !shuffleEnabled;
+      document.getElementById("shuffleBtn").textContent = `Trộn câu: ${shuffleEnabled ? "BẬT" : "TẮT"}`;
+      resetSession();
+    }
+
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function resetSession() {
+      let pool = currentMode === "mix"
+        ? [...QUESTIONS_DATA]
+        : QUESTIONS_DATA.filter(q => String(q.chapter) === currentMode);
+
+      const kw = document.getElementById("searchInput").value.trim().toLowerCase();
+      if (kw) {
+        pool = pool.filter(q =>
+          q.question.toLowerCase().includes(kw) ||
+          Object.values(q.options).some(v => v.toLowerCase().includes(kw))
+        );
+      }
+
+      if (shuffleEnabled) pool = shuffleArray(pool);
+
+      const limitVal = document.getElementById("limitSelect").value;
+      if (limitVal !== "all") {
+        pool = pool.slice(0, parseInt(limitVal, 10));
+      }
+
+      activeList = pool;
+      currentIndex = 0;
+      userAnswers = {};
+      renderQuestion();
+      updateStats();
+    }
+
+    function filterByKeyword() {
+      resetSession();
+    }
+
+    function startWrongReview() {
+      if (!wrongBank.length) {
+        alert("Bạn chưa có câu làm sai nào được lưu!");
+        return;
+      }
+      activeList = shuffleEnabled ? shuffleArray(wrongBank) : [...wrongBank];
+      currentIndex = 0;
+      userAnswers = {};
+      document.getElementById("statMode").textContent = "Ôn tập câu làm sai";
+      renderQuestion();
+      updateStats();
+    }
+
+    function updateStats() {
+      const total = activeList.length;
+      const answeredKeys = Object.keys(userAnswers);
+      let correct = 0;
+      let wrong = 0;
+      answeredKeys.forEach(idx => {
+        if (userAnswers[idx] === activeList[idx].answer) correct++;
+        else wrong++;
+      });
+      const rate = answeredKeys.length ? Math.round((correct / answeredKeys.length) * 100) : 0;
+      document.getElementById("statProgress").textContent = `${total ? currentIndex + 1 : 0} / ${total}`;
+      document.getElementById("statCorrect").textContent = correct;
+      document.getElementById("statWrong").textContent = wrong;
+      document.getElementById("statRate").textContent = `${rate}%`;
+      updateWrongCount();
+    }
+
+    function chooseOption(optKey) {
+      if (userAnswers[currentIndex] !== undefined) return;
+      const q = activeList[currentIndex];
+      userAnswers[currentIndex] = optKey;
+
+      if (optKey !== q.answer) {
+        if (!wrongBank.some(item => item.question === q.question)) {
+          wrongBank.push(q);
+          localStorage.setItem("lsd_helper_wrong", JSON.stringify(wrongBank));
+        }
+      } else {
+        wrongBank = wrongBank.filter(item => item.question !== q.question);
+        localStorage.setItem("lsd_helper_wrong", JSON.stringify(wrongBank));
+      }
+
+      renderQuestion();
+      updateStats();
+    }
+
+    function renderQuestion() {
+      const container = document.getElementById("quizContainer");
+      if (!activeList.length) {
+        container.innerHTML = `<div class="quiz-card">Không tìm thấy câu hỏi phù hợp. Hãy thử đổi chế độ hoặc xóa bộ lọc từ khóa.</div>`;
+        return;
+      }
+
+      const q = activeList[currentIndex];
+      const chosen = userAnswers[currentIndex];
+      const isAnswered = chosen !== undefined;
+
+      const optionsHtml = ["A", "B", "C", "D"].map(key => {
+        let cls = "option-btn";
+        if (isAnswered) {
+          if (key === q.answer) cls += " correct";
+          else if (key === chosen) cls += " wrong";
+        }
+        return `
+          <button class="${cls}" ${isAnswered ? "disabled" : ""} onclick="chooseOption('${key}')">
+            <span class="opt-key">${key}.</span>
+            <span>${q.options[key]}</span>
+          </button>
+        `;
+      }).join("");
+
+      container.innerHTML = `
+        <div class="quiz-card">
+          <div class="q-meta">
+            <span class="q-badge">Chương ${q.chapter} • Câu ${currentIndex + 1}/${activeList.length}</span>
+            <span>${isAnswered ? (chosen === q.answer ? "✅ Chính xác" : `❌ Đáp án đúng: ${q.answer}`) : "Chọn một đáp án đúng"}</span>
+          </div>
+          <div class="q-text">${q.question}</div>
+          <div class="options-list">${optionsHtml}</div>
+          <div class="explanation-box ${isAnswered ? "show" : ""}">
+            <strong>Giải thích &amp; Đối chiếu Bài giảng:</strong> ${q.explain || "Theo giáo trình Lịch sử Đảng Cộng sản Việt Nam."}
+          </div>
+          <div class="nav-footer">
+            <button onclick="prevQuestion()" ${currentIndex === 0 ? "disabled" : ""}>← Câu trước</button>
+            <button class="primary" onclick="nextQuestion()" ${currentIndex === activeList.length - 1 ? "disabled" : ""}>Câu tiếp theo →</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function prevQuestion() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        renderQuestion();
+        updateStats();
+      }
+    }
+
+    function nextQuestion() {
+      if (currentIndex < activeList.length - 1) {
+        currentIndex++;
+        renderQuestion();
+        updateStats();
+      }
+    }
+
+    // Optional: tự động nạp thêm file questions.json nếu bạn tách dữ liệu lớn ra file riêng trên GitHub
+    fetch("./questions.json")
+      .then(res => res.ok ? res.json() : null)
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          QUESTIONS_DATA.length = 0;
+          QUESTIONS_DATA.push(...data);
+          resetSession();
+        }
+      })
+      .catch(() => {});
+
+    selectMode("1");
+  </script>
+</body>
+</html>
